@@ -279,6 +279,34 @@
       100% { left: 160%; }
     }
 
+    /* ── Tag line ── */
+    .tagline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeSlideUp 0.6s ease 0.95s forwards;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .tagline-item {
+      color: #94a3b8;
+      transition: color 0.2s;
+    }
+
+    .tagline-item:hover { color: #c084fc; }
+
+    .tagline-sep {
+      color: rgba(168,85,247,0.4);
+      font-size: 0.6rem;
+    }
+
     /* ── Location ── */
     .location {
       font-size: 0.85rem;
@@ -442,6 +470,14 @@
     </div>
 
     <h1 id="nameEl"></h1>
+
+    <div class="tagline">
+      <span class="tagline-item">IIM Ahmedabad</span>
+      <span class="tagline-sep">✦</span>
+      <span class="tagline-item">Founder Mode</span>
+      <span class="tagline-sep">✦</span>
+      <span class="tagline-item">CUSAT</span>
+    </div>
 
     <p class="location">
       <span class="location-dot"></span>
