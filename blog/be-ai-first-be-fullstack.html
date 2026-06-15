@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Be AI-first, be full-stack — Sinu Kondayil</title>
+  <meta name="description" content="AI models and tools are rewriting how software gets built. The leverage goes to people who understand the whole stack — here's why being AI-first and full-stack go together.">
+
+  <link rel="icon" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #07070f;
+      color: #cbd5e1;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      line-height: 1.75;
+      cursor: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #a855f7;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: screen;
+    }
+    .cursor-trail {
+      position: fixed;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(168,85,247,0.4);
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: left 0.12s ease, top 0.12s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    }
+    body:has(a:hover) .cursor { width: 16px; height: 16px; background: #c084fc; }
+    body:has(a:hover) .cursor-trail { width: 50px; height: 50px; opacity: 0.5; }
+
+    @media (hover: none) {
+      body { cursor: auto; }
+      .cursor, .cursor-trail { display: none; }
+    }
+
+    /* ── Background ── */
+    .bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+    .bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(168,85,247,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168,85,247,0.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    }
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+    }
+    .bg-orb-1 { width: 460px; height: 460px; top: -160px; right: -120px; background: radial-gradient(circle, rgba(124,58,237,0.5), transparent 70%); animation: orbFloat 16s ease-in-out infinite; }
+    .bg-orb-2 { width: 380px; height: 380px; bottom: -140px; left: -100px; background: radial-gradient(circle, rgba(20,184,166,0.35), transparent 70%); animation: orbFloat 20s ease-in-out infinite reverse; }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50%      { transform: translate(30px, -30px); }
+    }
+
+    /* ── Layout ── */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 1.6rem 6rem;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.25s, gap 0.25s;
+      opacity: 0;
+      animation: rise 0.6s ease 0.1s forwards;
+    }
+    .back svg { width: 14px; height: 14px; }
+    .back:hover { color: #c084fc; gap: 0.7rem; }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 2.4rem 0 1rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: rise 0.6s ease 0.2s forwards;
+    }
+    .meta .tag { color: #c084fc; }
+    .meta .dot { width: 3px; height: 3px; border-radius: 50%; background: #475569; }
+    .meta .muted { color: #475569; }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.9rem, 5vw, 2.7rem);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      color: #f1f5f9;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: rise 0.7s ease 0.3s forwards;
+    }
+
+    .lede {
+      font-size: 1.08rem;
+      color: #94a3b8;
+      margin-bottom: 2.2rem;
+      opacity: 0;
+      animation: rise 0.7s ease 0.4s forwards;
+    }
+
+    .divider {
+      height: 1px;
+      width: 60px;
+      background: linear-gradient(90deg, #a855f7, transparent);
+      margin: 0 0 2.6rem;
+      opacity: 0;
+      animation: rise 0.7s ease 0.5s forwards;
+    }
+
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: #f1f5f9;
+      letter-spacing: -0.005em;
+      margin: 2.6rem 0 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    h2::before {
+      content: '';
+      width: 14px; height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #a855f7, #2dd4bf);
+    }
+
+    p { margin-bottom: 1.15rem; font-size: 1.02rem; }
+    .article strong { color: #e2e8f0; font-weight: 500; }
+    .article em { color: #c084fc; font-style: normal; }
+
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    .pull {
+      position: relative;
+      margin: 2.4rem 0;
+      padding: 1.4rem 1.5rem;
+      border-radius: 14px;
+      border: 1px solid rgba(168,85,247,0.25);
+      background: linear-gradient(110deg, rgba(124,58,237,0.12), rgba(20,184,166,0.1));
+      overflow: hidden;
+    }
+    .pull-q {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      line-height: 1.3;
+      background: linear-gradient(90deg, #c084fc, #2dd4bf);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pull-c { margin-top: 0.4rem; font-size: 0.8rem; color: #64748b; letter-spacing: 0.04em; }
+
+    .endmark {
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      color: #475569;
+      font-size: 0.85rem;
+    }
+    .endmark .line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(168,85,247,0.3), transparent); }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2.4rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #e9d5ff;
+      text-decoration: none;
+      background: linear-gradient(110deg, rgba(124,58,237,0.18), rgba(20,184,166,0.15));
+      border: 1px solid rgba(168,85,247,0.35);
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+    .cta:hover { border-color: rgba(45,212,191,0.55); box-shadow: 0 0 24px rgba(124,58,237,0.35); transform: translateY(-1px); }
+    .cta strong {
+      font-weight: 700;
+      background: linear-gradient(90deg, #c084fc, #2dd4bf);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <div class="bg">
+    <div class="bg-grid"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+  </div>
+
+  <article class="wrap">
+    <a href="../index.html" class="back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Sinu Kondayil
+    </a>
+
+    <div class="meta">
+      <span class="tag">AI</span>
+      <span class="dot"></span>
+      <span class="muted">6 min read</span>
+    </div>
+
+    <h1>Be AI-first, be full-stack</h1>
+    <p class="lede">AI can now write the code. That doesn't make engineers less valuable — it changes which engineers are valuable. The leverage goes to people who see the whole system.</p>
+    <div class="divider"></div>
+
+    <div class="article">
+      <h2 class="reveal">The ground just shifted</h2>
+      <p class="reveal">A few years ago, building software meant typing most of it yourself. Today, AI models and tools — coding copilots, agents, code-generation, instant scaffolding — handle a huge share of the keystrokes. You describe intent; the model produces a first draft of the implementation. Boilerplate, glue code, test stubs, migrations, even whole features arrive in seconds.</p>
+      <p class="reveal">This isn't a small productivity bump. It's a change in <strong>what the job is</strong>. The bottleneck is moving away from "can you write this function?" toward "do you know what to build, how the pieces fit, and whether the output is actually correct?"</p>
+
+      <h2 class="reveal">AI raises the floor, not the ceiling</h2>
+      <p class="reveal">Here's the trap: AI makes <em>everyone</em> look capable on a small, well-scoped task. It will happily generate a React component, a SQL query, a Dockerfile. But software isn't a pile of snippets — it's a <strong>system</strong>. Where does state live? How does the frontend talk to the API? What happens to that query under load? Is this deploy safe? Models answer the local question well and the global question poorly.</p>
+      <p class="reveal">So the value shifts to whoever can hold the <strong>whole picture</strong> — and that's the full-stack mind. Not "knows every framework," but understands the end-to-end shape of an application: UI, API, data, infrastructure, integrations, deployment, and how a change in one ripples through the rest.</p>
+
+      <div class="pull reveal">
+        <div class="pull-q">AI writes the code. The full-stack engineer decides whether it should exist, and makes it hold up at scale.</div>
+        <div class="pull-c">— the new division of labor</div>
+      </div>
+
+      <h2 class="reveal">Why end-to-end understanding is the multiplier</h2>
+      <p class="reveal">When you understand the full stack, AI stops being a fancier autocomplete and becomes a <strong>force multiplier</strong>. You can:</p>
+      <p class="reveal"><strong>Ask the right thing.</strong> Good prompts come from knowing what good architecture looks like. You direct the model toward the design that fits, instead of accepting the first plausible answer.</p>
+      <p class="reveal"><strong>Verify the output.</strong> You catch the subtle bug, the security hole, the query that won't scale, the abstraction that'll rot — because you understand the layer it lives in.</p>
+      <p class="reveal"><strong>Wire it together.</strong> AI gives you parts. Someone still has to assemble frontend, backend, data, and infra into one coherent product that ships and stays up. That assembly is the work.</p>
+      <p class="reveal"><strong>Scale it.</strong> Meaningful applications live or die on the things AI rarely volunteers — caching, indexes, failure modes, cost, observability. Knowing the stack is what turns a demo into a product.</p>
+
+      <h2 class="reveal">Be both</h2>
+      <p class="reveal">So the advice is simple, and the two halves reinforce each other. <strong>Be AI-first:</strong> reach for the model by default, automate the rote, let it carry the volume of code. <strong>Be full-stack:</strong> understand the system deeply enough to aim the AI, judge what it produces, and own the result end to end.</p>
+      <p class="reveal">AI-first without depth is a fast way to ship fragile software. Depth without AI is leaving enormous leverage on the table. Together, a single person can now design, build, and scale things that used to need a team. That's the most exciting time to be an engineer — if you refuse to stay narrow.</p>
+
+      <div class="endmark reveal">
+        <span class="line"></span>
+        AI-first · full-stack
+        <span class="line"></span>
+      </div>
+
+      <a href="https://pidiga.com" target="_blank" rel="noopener" class="cta reveal">
+        See what I'm building — <strong>Pidiga&nbsp;AI</strong>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+    </div>
+  </article>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const trail  = document.getElementById('cursorTrail');
+    let mx = 0, my = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top  = my + 'px';
+    });
+    let tx = 0, ty = 0;
+    (function animTrail() {
+      tx += (mx - tx) * 0.12;
+      ty += (my - ty) * 0.12;
+      trail.style.left = tx + 'px';
+      trail.style.top  = ty + 'px';
+      requestAnimationFrame(animTrail);
+    })();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('show'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>

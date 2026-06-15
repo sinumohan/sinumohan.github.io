@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineer who did an AGMP (IIMA) — worth it? — Sinu Kondayil</title>
+  <meta name="description" content="What IIM Ahmedabad's Accelerated General Management Programme (AGMP, 2024–2025) taught an engineer about moving from individual contributor to management thinking — the network, the memories, the shift.">
+
+  <link rel="icon" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #07070f;
+      color: #cbd5e1;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      line-height: 1.75;
+      cursor: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #a855f7;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: screen;
+    }
+    .cursor-trail {
+      position: fixed;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(168,85,247,0.4);
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: left 0.12s ease, top 0.12s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    }
+    body:has(a:hover) .cursor { width: 16px; height: 16px; background: #c084fc; }
+    body:has(a:hover) .cursor-trail { width: 50px; height: 50px; opacity: 0.5; }
+
+    @media (hover: none) {
+      body { cursor: auto; }
+      .cursor, .cursor-trail { display: none; }
+    }
+
+    /* ── Background ── */
+    .bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+    .bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(168,85,247,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168,85,247,0.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    }
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+    }
+    .bg-orb-1 { width: 460px; height: 460px; top: -160px; right: -120px; background: radial-gradient(circle, rgba(124,58,237,0.5), transparent 70%); animation: orbFloat 16s ease-in-out infinite; }
+    .bg-orb-2 { width: 380px; height: 380px; bottom: -140px; left: -100px; background: radial-gradient(circle, rgba(20,184,166,0.35), transparent 70%); animation: orbFloat 20s ease-in-out infinite reverse; }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50%      { transform: translate(30px, -30px); }
+    }
+
+    /* ── Layout ── */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 1.6rem 6rem;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.25s, gap 0.25s;
+      opacity: 0;
+      animation: rise 0.6s ease 0.1s forwards;
+    }
+    .back svg { width: 14px; height: 14px; }
+    .back:hover { color: #c084fc; gap: 0.7rem; }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 2.4rem 0 1rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: rise 0.6s ease 0.2s forwards;
+    }
+    .meta .tag { color: #c084fc; }
+    .meta .dot { width: 3px; height: 3px; border-radius: 50%; background: #475569; }
+    .meta .muted { color: #475569; }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.9rem, 5vw, 2.7rem);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      color: #f1f5f9;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: rise 0.7s ease 0.3s forwards;
+    }
+
+    .lede {
+      font-size: 1.08rem;
+      color: #94a3b8;
+      margin-bottom: 2.2rem;
+      opacity: 0;
+      animation: rise 0.7s ease 0.4s forwards;
+    }
+
+    .divider {
+      height: 1px;
+      width: 60px;
+      background: linear-gradient(90deg, #a855f7, transparent);
+      margin: 0 0 2.6rem;
+      opacity: 0;
+      animation: rise 0.7s ease 0.5s forwards;
+    }
+
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: #f1f5f9;
+      letter-spacing: -0.005em;
+      margin: 2.6rem 0 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    h2::before {
+      content: '';
+      width: 14px; height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #a855f7, #2dd4bf);
+    }
+
+    p { margin-bottom: 1.15rem; font-size: 1.02rem; }
+    .article strong { color: #e2e8f0; font-weight: 500; }
+    .article em { color: #c084fc; font-style: normal; }
+
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    /* inline links */
+    .article a.ilink {
+      color: #c084fc;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(168,85,247,0.35);
+      transition: color 0.25s, border-color 0.25s;
+    }
+    .article a.ilink:hover { color: #2dd4bf; border-color: rgba(45,212,191,0.6); }
+
+    .stat-link { text-decoration: none; }
+    .stat-link .stat-n { transition: filter 0.25s; }
+    .stat-link:hover .stat-n { filter: brightness(1.15); }
+    .stat-link:hover .stat-l { color: #c084fc; }
+    .stat-l { transition: color 0.25s; }
+
+    /* stat strip */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.4rem;
+      margin: 0.4rem 0 2.2rem;
+      padding: 1.1rem 1.3rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(18,18,30,0.5);
+    }
+    .stat-n {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #c084fc, #2dd4bf);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-l { font-size: 0.7rem; color: #64748b; letter-spacing: 0.04em; }
+
+    .pull {
+      position: relative;
+      margin: 2.4rem 0;
+      padding: 1.4rem 1.5rem;
+      border-radius: 14px;
+      border: 1px solid rgba(168,85,247,0.25);
+      background: linear-gradient(110deg, rgba(124,58,237,0.12), rgba(20,184,166,0.1));
+      overflow: hidden;
+    }
+    .pull-q {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      line-height: 1.3;
+      background: linear-gradient(90deg, #c084fc, #2dd4bf);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pull-c { margin-top: 0.4rem; font-size: 0.8rem; color: #64748b; letter-spacing: 0.04em; }
+
+    .endmark {
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      color: #475569;
+      font-size: 0.85rem;
+    }
+    .endmark .line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(168,85,247,0.3), transparent); }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2.4rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #e9d5ff;
+      text-decoration: none;
+      background: linear-gradient(110deg, rgba(124,58,237,0.18), rgba(20,184,166,0.15));
+      border: 1px solid rgba(168,85,247,0.35);
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+    .cta:hover { border-color: rgba(45,212,191,0.55); box-shadow: 0 0 24px rgba(124,58,237,0.35); transform: translateY(-1px); }
+    .cta strong {
+      font-weight: 700;
+      background: linear-gradient(90deg, #c084fc, #2dd4bf);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <div class="bg">
+    <div class="bg-grid"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+  </div>
+
+  <article class="wrap">
+    <a href="../index.html" class="back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Sinu Kondayil
+    </a>
+
+    <div class="meta">
+      <span class="tag">Career</span>
+      <span class="dot"></span>
+      <span class="muted">7 min read</span>
+    </div>
+
+    <h1>Engineer who did an AGMP (IIMA) — worth it?</h1>
+    <p class="lede">A year at IIM Ahmedabad's AGMP changed less about what I build and more about how I think. Here's the honest answer.</p>
+    <div class="divider"></div>
+
+    <div class="article">
+      <div class="stats reveal">
+        <a class="stat-link" href="https://www.iima.ac.in" target="_blank" rel="noopener">
+          <div class="stat-n">IIMA</div>
+          <div class="stat-l">Ahmedabad</div>
+        </a>
+        <a class="stat-link" href="https://exed.iima.ac.in/accelerated-general-management-programme" target="_blank" rel="noopener">
+          <div class="stat-n">AGMP</div>
+          <div class="stat-l">Accelerated General Management ↗</div>
+        </a>
+        <div>
+          <div class="stat-n">2024–25</div>
+          <div class="stat-l">The batch</div>
+        </div>
+      </div>
+
+      <h2 class="reveal">The question every engineer asks</h2>
+      <p class="reveal">For most of my career I was an <strong>individual contributor</strong> — give me a problem, I'll ship the solution. Engineers are trained to optimize the thing in front of them. So when I joined the <a class="ilink" href="https://exed.iima.ac.in/accelerated-general-management-programme" target="_blank" rel="noopener">Accelerated General Management Programme (AGMP)</a> at <a class="ilink" href="https://www.iima.ac.in" target="_blank" rel="noopener">IIM Ahmedabad</a>, the 2024–2025 batch, the real question wasn't "will this teach me to code better?" It was "will it teach me to think differently?"</p>
+      <p class="reveal">It did. And not in the ways I expected.</p>
+
+      <h2 class="reveal">From IC to management thinking</h2>
+      <p class="reveal">The biggest shift was learning to <strong>zoom out</strong>. As an IC, success is local: the feature works, the bug is fixed, the system is fast. Management thinking is about the system <em>around</em> the system — why this problem, for whom, at what cost, with what trade-off against three other things you could have done instead.</p>
+      <p class="reveal">IIMA's case method drills this in relentlessly. You don't get clean specs; you get messy situations with missing data and conflicting incentives, and you have to <strong>decide anyway</strong>. Marketing, finance, operations, strategy, organizational behavior — each case forced me out of the engineer's instinct to optimize one variable and into weighing the whole board. That muscle is exactly what running a company demands.</p>
+
+      <h2 class="reveal">The network and the connections</h2>
+      <p class="reveal">The classroom teaches frameworks. The <strong>people</strong> teach perspective. My cohort was full of operators, founders, and leaders from industries I'd never have crossed paths with as an engineer — manufacturing, finance, healthcare, consumer brands. Every discussion was a free education in how a different world actually works.</p>
+      <p class="reveal">That <strong>network</strong> outlasts the course. The connections I made are people I still call when I'm stuck on something outside my own domain — pricing, hiring, go-to-market, fundraising. For a founder, that on-call brain trust might be the single most valuable thing IIMA hands you.</p>
+
+      <h2 class="reveal">The memories</h2>
+      <p class="reveal">And honestly — it was a <em>great</em> year. Late nights arguing over a case, the rhythm of campus, the friendships formed under pressure. The IIMA experience isn't only intellectual; it's the memories of going through something demanding alongside a group of sharp, ambitious people. Those stay with you long after the frameworks blur.</p>
+
+      <div class="pull reveal">
+        <div class="pull-q">It didn't make me a better engineer. It made me a better decision-maker.</div>
+        <div class="pull-c">— the real return on AGMP</div>
+      </div>
+
+      <h2 class="reveal">So — worth it?</h2>
+      <p class="reveal">For an engineer who wants to keep writing code forever, maybe not. For an engineer who wants to <strong>build and run things</strong> — to move from contributing to a product to owning a business — it was worth every bit. AGMP gave me the language of management, the network to lean on, and the habit of thinking in trade-offs instead of tickets.</p>
+      <p class="reveal">I went in an individual contributor. I came out thinking like someone responsible for the whole thing. That's exactly what I needed to build <strong>Pidiga</strong>.</p>
+
+      <div class="endmark reveal">
+        <span class="line"></span>
+        IIMA · AGMP '24–'25
+        <span class="line"></span>
+      </div>
+
+      <a href="https://pidiga.com" target="_blank" rel="noopener" class="cta reveal">
+        See what I'm building — <strong>Pidiga&nbsp;AI</strong>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+    </div>
+  </article>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const trail  = document.getElementById('cursorTrail');
+    let mx = 0, my = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top  = my + 'px';
+    });
+    let tx = 0, ty = 0;
+    (function animTrail() {
+      tx += (mx - tx) * 0.12;
+      ty += (my - ty) * 0.12;
+      trail.style.left = tx + 'px';
+      trail.style.top  = ty + 'px';
+      requestAnimationFrame(animTrail);
+    })();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('show'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
